@@ -188,42 +188,69 @@
     .settings-content { background: #2d3436; padding: 40px; border-radius: 25px; width: 85%; max-width: 400px; text-align: center; border: 1px solid rgba(255,255,255,0.1); } .setting-row { margin: 20px 0; display: flex; justify-content: space-between; align-items: center; font-size: 1.1rem; font-weight: bold; } .switch { position: relative; display: inline-block; width: 60px; height: 34px; } .switch input { opacity: 0; width: 0; height: 0; } .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #ccc; transition: .4s; border-radius: 34px; } .slider:before { position: absolute; content: ""; height: 26px; width: 26px; left: 4px; bottom: 4px; background-color: white; transition: .4s; border-radius: 50%; } input:checked + .slider { background-color: #00cec9; } input:checked + .slider:before { transform: translateX(26px); } .btn-toggle-creative { background: #6c5ce7; color: white; border: none; padding: 15px 20px; border-radius: 8px; font-weight: bold; width: 100%; margin-top: 10px; cursor: pointer; } .btn-danger { background: #d63031; color: white; border: none; padding: 12px; width: 100%; margin-top: 25px; cursor: pointer; border-radius: 8px; font-weight: bold; } .btn-close-settings { background: #b2bec3; color: #2d3436; border: none; padding: 12px; width: 100%; margin-top: 15px; cursor: pointer; border-radius: 8px; font-weight: bold; }
     .shake { animation: shake 0.4s cubic-bezier(.36,.07,.19,.97) both; } @keyframes shake { 10%, 90% { transform: translate3d(-2px, 0, 0); } 20%, 80% { transform: translate3d(4px, 0, 0); } 30%, 50%, 70% { transform: translate3d(-6px, 0, 0); } 40%, 60% { transform: translate3d(6px, 0, 0); } }
 /* --- OPTIMISATION MOBILE (RESPONSIVE) --- */
+    /* --- OPTIMISATION MOBILE FINALE (RESPONSIVE) --- */
     @media (max-width: 480px) {
-        /* 1. DÉZOOM GLOBAL DU MENU (LISTE DES MONDES) */
-        #grid-container {
-            zoom: 0.75; /* Réduit tout le menu à 75% de sa taille */
-            width: 100%;
+        
+        /* 1. VICTOIRE : Titre adaptatif (ne sera jamais coupé) */
+        .vic-title { 
+            font-size: 11vw; /* S'adapte à la largeur de l'écran */
+            line-height: 1.1; 
         }
-
-        /* 2. CORRECTION DU TITRE VICTOIRE COUPÉ */
-        .vic-title { font-size: 2rem; line-height: 1.2; } /* Taille réduite pour tenir */
         .vic-icon { font-size: 4rem; margin-bottom: 10px; }
-        .vic-text { font-size: 1rem; margin-bottom: 30px; }
+        .vic-text { font-size: 1rem; padding: 0 20px; }
 
-        /* Ajustements interface standards */
-        .world-title-global { font-size: 1.4rem; }
-        .energy-title { font-size: 1.2rem; }
-        .energy-val { font-size: 1.8rem; }
-        
-        .hud-top { height: 70px; padding: 0 10px; }
-        .stat-val { font-size: 1.1rem; }
-        .settings-btn { font-size: 1.5rem; }
-        .heart-icons { font-size: 1rem; }
-        
-        /* On remonte le jeu car la barre du haut est plus petite */
-        #game-screen { padding-top: 85px; } 
-        
-        .q-display { font-size: 2.5rem; margin: 10px 0; }
-        .inp-display { height: 60px; line-height: 60px; font-size: 2.2rem; min-width: 200px; margin-bottom: 15px; }
-        
-        .numpad { gap: 8px; width: 92%; }
-        .key { padding: 12px 0; font-size: 1.3rem; border-radius: 10px; }
-        
-        .k-close { top: 80px; right: 15px; width: 40px; height: 40px; font-size: 1.5rem; }
+        /* 2. DÉZOOM DU MENU (Cartes plus petites) */
+        .world-card-global {
+            width: 75% !important; /* Réduit la largeur pour l'effet "loin" */
+            max-width: 300px;
+            margin-bottom: 50px; /* Réduit l'espace vertical */
+        }
+        .world-title-global { font-size: 1.3rem; }
+        .world-status-global { font-size: 1rem; }
 
-        .lvl-btn { width: 70px; height: 70px; font-size: 1.4rem; margin: 15px 0; }
-        .lvl-btn:nth-child(4n+2) { transform: translateX(60px); }
-        .lvl-btn:nth-child(4n+4) { transform: translateX(-60px); }
+        /* 3. BOUTON INFINI PLUS PETIT */
+        .energy-gate { 
+            width: 75%; 
+            padding: 20px; 
+            margin-bottom: 40px; 
+        }
+        .energy-title { font-size: 1rem; }
+        .energy-val { font-size: 1.4rem; }
+
+        /* 4. INTERFACE JEU (HUD & BOUTONS) */
+        .hud-top { height: 70px; padding: 0 5px; }
+        .stat-val { font-size: 0.9rem; }
+        .stat-label { font-size: 0.6rem; }
+        .settings-btn { font-size: 1.4rem; }
+        .heart-icons { font-size: 0.9rem; letter-spacing: 0; }
+        #ui-life-timer { font-size: 0.6rem; }
+        
+        /* Jeu remonté */
+        #game-screen { padding-top: 80px; } 
+        
+        /* Éléments de jeu compacts */
+        .q-display { font-size: 2.2rem; margin: 5px 0; }
+        .inp-display { height: 50px; line-height: 50px; font-size: 2rem; min-width: 180px; margin-bottom: 10px; }
+        
+        .numpad { gap: 6px; width: 95%; }
+        .key { padding: 10px 0; font-size: 1.2rem; border-radius: 8px; }
+        
+        /* Croix de fermeture */
+        .k-close { top: 80px; right: 10px; width: 40px; height: 40px; font-size: 1.5rem; }
+
+        /* Niveaux (Bulles) */
+        .lvl-btn { width: 65px; height: 65px; font-size: 1.2rem; margin: 15px 0; }
+        .lvl-btn:nth-child(4n+2) { transform: translateX(50px); }
+        .lvl-btn:nth-child(4n+4) { transform: translateX(-50px); }
+    }
+    
+    /* Sécurité iPhone SE et petits écrans */
+    @media (max-height: 650px) {
+        .q-display { margin: 2px 0; font-size: 1.8rem; }
+        .key { padding: 8px 0; }
+        .inp-display { margin-bottom: 5px; height: 45px; line-height: 45px; }
+        .bars-container { margin-bottom: 5px; }
+        #g-instr { min-height: 18px; font-size: 0.8rem; margin: 5px 0; }
     }
         
         /* Barre du haut (HUD) plus fine */

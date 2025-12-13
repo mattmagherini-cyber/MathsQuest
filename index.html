@@ -5211,7 +5211,7 @@ case 15: // POURCENTAGES
         resetData: () => { if(confirm("Tout effacer ?")) { localStorage.removeItem('mq_2d'); localStorage.removeItem('mq_2d_backup'); location.reload(); } }
     };
 
-    function calculateTimeForLevel(lvl) { let world = Math.ceil(lvl / 20); return (window.gameState.settings.creative ? 2 : 20) * (5 + world); }
+    function calculateTimeForLevel(lvl) { let world = Math.ceil(lvl / 20); return (window.gameState.settings.creative ? 2 : 20) * (5 + (world * 0.5)); }
     function startTimer() { if(timerInterval) clearInterval(timerInterval); const bar = document.getElementById('g-timer-bar'); bar.className = "timer-bar-fill"; bar.style.width = "100%"; timerInterval = setInterval(() => { timeLeft--; let pct = (timeLeft / totalTimeAllowed) * 100; bar.style.width = pct + "%"; if(pct < 30) bar.className = "timer-bar-fill low"; else if(pct < 60) bar.className = "timer-bar-fill medium"; if(timeLeft <= 0) { clearInterval(timerInterval); window.game.gameOver(); } }, 1000); }
     
     window.triggerUnlock = function(w, e) {
@@ -5325,7 +5325,7 @@ case 15: // POURCENTAGES
                 } else { window.game.nextQuestion(currentSession.lvl); }
             } else { 
                 let currentWorld = Math.ceil(currentSession.lvl / 20);
-                let penalty = 1.0 + (currentWorld - 1) * 0.1;
+                let penalty = 2.0 + (currentWorld - 1) * 0.2;
                 penalty = parseFloat(penalty.toFixed(1));
                 timeLeft -= penalty;
                 let floater = document.createElement('div');

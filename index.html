@@ -449,7 +449,7 @@
         <button class="key" onclick="window.game.tap('7')">7</button><button class="key" onclick="window.game.tap('8')">8</button><button class="key" onclick="window.game.tap('9')">9</button>
         <button class="key k-frac" onclick="window.game.tap('/')">÷</button>
         <button class="key" onclick="window.game.tap('4')">4</button><button class="key" onclick="window.game.tap('5')">5</button><button class="key" onclick="window.game.tap('6')">6</button><button class="key k-op">×</button>
-        <button class="key" onclick="window.game.tap('1')">1</button><button class="key" onclick="window.game.tap('2')">2</button><button class="key" onclick="window.game.tap('3')">3</button><button class="key k-op">-</button>
+        <button class="key" onclick="window.game.tap('1')">1</button><button class="key" onclick="window.game.tap('2')">2</button><button class="key" onclick="window.game.tap('3')">3</button><button class="key k-op" onclick="window.game.tap('-')">-</button>
         <button class="key" onclick="window.game.tap('0')">0</button><button class="key" onclick="window.game.tap('.')">,</button><button class="key k-del" onclick="window.game.tap('DEL')">⌫</button><button class="key k-op">+</button>
         <button class="key k-ok" onclick="window.game.validate()">VALIDER</button>
     </div>
@@ -5324,11 +5324,32 @@ case 15: // POURCENTAGES
         // --------------------------------------
         close: () => { if(timerInterval) clearInterval(timerInterval); document.getElementById('game-screen').classList.remove('active'); currentSession = null; let currentWorld = Math.ceil((parseInt(document.getElementById('g-lvl-num').innerText))/20); enterWorld(currentWorld); },
         closeFromModal: () => { document.getElementById('result-modal').classList.remove('active'); window.game.close(); },
-        tap: (k) => { 
-            if(window.gameState.settings.vib && navigator.vibrate) navigator.vibrate(10); 
-            if(k === ',') k = '.'; 
-            let d = document.getElementById('g-inp'); if(!d) return; 
-            if(k === 'DEL') d.innerText = d.innerText.slice(0, -1); else if(d.innerText.length < 8) d.innerText += k; 
+        tap: (k) => {
+            let display = document.getElementById('g-inp');
+            
+            // CAS 1 : C'est le bouton "DEL"
+            if (k === 'DEL') {
+                display.innerText = display.innerText.slice(0, -1);
+                return;
+            }
+            
+            // CAS 2 : C'est le bouton "-" (Gestion des négatifs)
+            if (k === '-') {
+                // Si ça commence déjà par "-", on l'enlève (ça redevient positif)
+                if (display.innerText.startsWith('-')) {
+                    display.innerText = display.innerText.substring(1);
+                } 
+                // Sinon, on ajoute "-" au tout début
+                else {
+                    display.innerText = '-' + display.innerText;
+                }
+                return;
+            }
+
+            // CAS 3 : C'est un chiffre ou une virgule
+            if (display.innerText.length < 10) {
+                display.innerText += k;
+            }
         },
         validate: () => {
             if(!currentSession) return; 

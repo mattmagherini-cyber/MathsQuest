@@ -2429,14 +2429,23 @@ case 5: // PUISSANCES DE 10
                     hint = "Tu dépenses plus que tu n'as."; 
                 }
                 // --- MONDES 21 à 25 : EXPERT / TERMINALE (PRÉCISION MAXIMALE) ---
-                else if (world == 21) { 
-                    n1 = 1.05;
-                    n2 = 0.9;
-                    ans = 1.95;
+                else if (world == 21) {
+                    // 1. On crée le premier nombre type 1.05, 2.05, 3.05
+                    let entier = rand(1, 5);
+                    n1 = entier + 0.05; 
+
+                    // 2. On crée le deuxième nombre type 0.9, 0.4, 0.7
+                    let dec = rand(1, 9);
+                    n2 = dec / 10; // Donne 0.1, 0.9, etc.
+
+                    // 3. Calcul de la réponse (arrondi pour éviter les bugs de virgule Javascript)
+                    // Ex: 1.05 + 0.9 = 1.95
+                    ans = (Math.round(n1 * 100) + Math.round(n2 * 100)) / 100;
+
                     op = `${n1} + ${n2}`;
-                    if (rand(0, 1)) { n1 = 2.05; n2 = 0.5; ans = 2.55; }
                     instr = "Alignement strict :"; 
-                    hint = "0.9 c'est 0.90."; 
+                    // L'indice s'adapte : "0.4 c'est 0.40"
+                    hint = `${n2} c'est ${n2}0.`; 
                 } 
                 else if (world == 22) { 
                     n1 = rand(2, 9);
